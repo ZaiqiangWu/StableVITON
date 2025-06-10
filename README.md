@@ -1,8 +1,10 @@
 # [CVPR2024] StableVITON: Learning Semantic Correspondence with Latent Diffusion Model for Virtual Try-On 
+***** New follow-up research by our team is available at https://github.com/rlawjdghek/PromptDresser *****
+
 This repository is the official implementation of [StableVITON](https://arxiv.org/abs/2312.01725)
 
 > **StableVITON: Learning Semantic Correspondence with Latent Diffusion Model for Virtual Try-On**<br>
-> [Jeongho Kim](https://scholar.google.co.kr/citations?user=ucoiLHQAAAAJ&hl=ko), [Gyojung Gu](https://www.linkedin.com/in/gyojung-gu-29033118b/), [Minho Park](https://pmh9960.github.io/), [Sunghyun Park](https://psh01087.github.io/), [Jaegul Choo](https://sites.google.com/site/jaegulchoo/) 
+> [Jeongho Kim](https://scholar.google.co.kr/citations?user=4SCCBFwAAAAJ&hl=ko), [Gyojung Gu](https://www.linkedin.com/in/gyojung-gu-29033118b/), [Minho Park](https://pmh9960.github.io/), [Sunghyun Park](https://psh01087.github.io/), [Jaegul Choo](https://sites.google.com/site/jaegulchoo/)
 
 [[arXiv Paper](https://arxiv.org/abs/2312.01725)]&nbsp;
 [[Project Page](https://rlawjdghek.github.io/StableVITON/)]&nbsp;
@@ -129,11 +131,12 @@ CUDA_VISIBLE_DEVICES=5,6 python train.py \
 ## Citation
 If you find our work useful for your research, please cite us:
 ```
-@artical{kim2023stableviton,
-    title={StableVITON: Learning Semantic Correspondence with Latent Diffusion Model for Virtual Try-On},
-    author={Kim, Jeongho and Gu, Gyojung and Park, Minho and Park, Sunghyun and Choo, Jaegul},
-    booktitle={arXiv preprint arxiv:2312.01725},
-    year={2023}
+@inproceedings{kim2024stableviton,
+  title={Stableviton: Learning semantic correspondence with latent diffusion model for virtual try-on},
+  author={Kim, Jeongho and Gu, Guojung and Park, Minho and Park, Sunghyun and Choo, Jaegul},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={8176--8185},
+  year={2024}
 }
 ```
 
