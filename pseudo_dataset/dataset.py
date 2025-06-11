@@ -174,6 +174,10 @@ class VITONHDDataset(Dataset):
         self.agn_mask=np.array(mask)
         self.image=self.person_image
         self.image_densepose=densepose
+        print(self.agn.shape)
+        print(self.agn_mask.shape)
+        print(self.image_densepose.shape)
+        print(self.image.shape)
 
     def __getitem__(self, idx):
 
