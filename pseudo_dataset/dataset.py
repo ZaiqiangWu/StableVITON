@@ -169,13 +169,13 @@ class VITONHDDataset(Dataset):
 
         masked_vton_img = Image.composite(mask_gray, img, mask)
         masked_vton_img = np.array(masked_vton_img)
-        masked_vton_img=cv2.cvtColor(masked_vton_img, cv2.COLOR_BGR2RGB)
+        #masked_vton_img=cv2.cvtColor(masked_vton_img, cv2.COLOR_BGR2RGB)
         self.agn=masked_vton_img.astype(np.float32)/127.5 -1.0
         mask=np.array(mask)
         #mask=mask[:,:,np.newaxis]
         #mask=mask[:,:,[0,0,0]]
         self.agn_mask=mask.astype(np.float32)/255
-        self.image=self.person_image.astype(np.float32)/127.5 -1.0
+        self.image=self.person_image[:,:,::-1].astype(np.float32)/127.5 -1.0
         self.image_densepose=densepose.astype(np.float32)/127.5 -1.0
         print(self.agn.shape)
         print(self.agn_mask.shape)
