@@ -9,7 +9,7 @@ omegaconf
 albumentations
 transformers==4.33.2
 xformers==0.0.22
-triton==2.0.0
+triton
 open-clip-torch==2.19.0
 diffusers==0.20.2
 scipy==1.10.1
