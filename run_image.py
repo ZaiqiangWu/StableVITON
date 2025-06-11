@@ -12,7 +12,7 @@ from pseudo_dataset.dataset import VITONHDDataset
 
 from cldm.plms_hacked import PLMSSampler
 from cldm.model import create_model
-from utils import tensor2img
+from sv_utils import tensor2img
 
 def build_args():
     parser = argparse.ArgumentParser()
