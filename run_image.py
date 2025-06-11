@@ -104,6 +104,8 @@ def main(args):
             if args.repaint:
                 repaint_agn_img = np.uint8((batch["image"][sample_idx].cpu().numpy()+1)/2 * 255)   # [0,255]
                 repaint_agn_mask_img = batch["agn_mask"][sample_idx].cpu().numpy()  # 0 or 1
+                repaint_agn_mask_img=repaint_agn_mask_img[:,:,np.newaxis]
+                repaint_agn_mask_img=repaint_agn_mask_img[:,:,[0,0,0]]
                 x_sample_img = repaint_agn_img * repaint_agn_mask_img + x_sample_img * (1-repaint_agn_mask_img)
                 x_sample_img = np.uint8(x_sample_img)
 
