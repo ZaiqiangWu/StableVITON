@@ -39,6 +39,7 @@ pip install open-clip-torch==2.19.0
 pip install diffusers==0.20.2
 pip install scipy==1.10.1
 conda install -c anaconda ipython -y
+pip install 'git+https://github.com/facebookresearch/detectron2.git'
 ```
 
 ## Weights and Data
