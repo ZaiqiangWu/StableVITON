@@ -79,7 +79,7 @@ class DensePoseExtractor(DumpAction):
         #self.dp_model.add_arguments(self.parser)
         self.args = self.parser.parse_args([])
         opts = []
-        self.cfg = './model/DensePose/configs/densepose_rcnn_R_50_FPN_s1x.yaml'
+        self.cfg = './preprocess/DensePose/configs/densepose_rcnn_R_50_FPN_s1x.yaml'
         self.model = 'https://dl.fbaipublicfiles.com/densepose/densepose_rcnn_R_50_FPN_s1x/165712039/model_final_162be9.pkl'
         cfg = self.dp_model.setup_config(self.cfg, self.model, self.args, opts)
         self.predictor = DefaultPredictor(cfg)
