@@ -152,20 +152,20 @@ class VITONHDDataset(Dataset):
         self.cloth_name = cloth_name
     def set_person_image(self,img,isRGB=False):
         assert img.shape[2]==3
-        self.person_image = cv2.resize(img,(768,1024))
+        self.person_image = cv2.resize(img,(self.img_W,self.img_H))
         densepose = self.densepose_extractor.get_dp_map(self.person_image, isRGB=False)
         if not isRGB:
             img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         img=Image.fromarray(img)
-        img=img.resize((768,1024),Image.Resampling.BILINEAR)
+        img=img.resize((self.img_W,self.img_H),Image.Resampling.BILINEAR)
         keypoints = self.openpose_model(img.resize((384, 512),Image.Resampling.BILINEAR))
         model_parse, _ = self.parsing_model(img.resize((384, 512),Image.Resampling.BILINEAR))
         category_dict_utils = ['upper_body', 'lower_body', 'dresses']
         model_type = 'dc'#hd
 
         mask, mask_gray = get_mask_location(model_type, category_dict_utils[0], model_parse, keypoints)
-        mask = mask.resize((768, 1024), Image.NEAREST)
-        mask_gray = mask_gray.resize((768, 1024), Image.NEAREST)
+        mask = mask.resize((self.img_W,self.img_H), Image.NEAREST)
+        mask_gray = mask_gray.resize((self.img_W,self.img_H), Image.NEAREST)
 
         masked_vton_img = Image.composite(mask_gray, img, mask)
         masked_vton_img = np.array(masked_vton_img)
