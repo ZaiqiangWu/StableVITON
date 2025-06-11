@@ -169,7 +169,7 @@ class VITONHDDataset(Dataset):
         keypoints = self.openpose_model(img.resize((384, 512)))
         model_parse, _ = self.parsing_model(img.resize((384, 512)))
         category_dict_utils = ['upper_body', 'lower_body', 'dresses']
-        model_type = 'dc'
+        model_type = 'dc'#hd
 
         mask, mask_gray = get_mask_location(model_type, category_dict_utils[0], model_parse, keypoints)
         mask = mask.resize((768, 1024), Image.NEAREST)
