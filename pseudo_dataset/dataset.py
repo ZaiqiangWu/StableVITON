@@ -174,7 +174,7 @@ class VITONHDDataset(Dataset):
         mask=np.array(mask)
         #mask=mask[:,:,np.newaxis]
         #mask=mask[:,:,[0,0,0]]
-        self.agn_mask=mask.astype(np.float32)/255
+        self.agn_mask=1 - mask.astype(np.float32)/255
         self.image=self.person_image[:,:,::-1].astype(np.float32)/127.5 -1.0
         self.image_densepose=densepose.astype(np.float32)/127.5 -1.0
         print(self.agn.shape)
