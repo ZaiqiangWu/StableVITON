@@ -1,0 +1,1 @@
+wget "https://onedrive.live.com/?cid=12345&id=12345&authkey=ABCD&download=1" -O filename.ext
