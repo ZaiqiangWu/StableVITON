@@ -157,7 +157,7 @@ class VITONHDDataset(Dataset):
         if not isRGB:
             img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         img=Image.fromarray(img)
-        img=img.resize(768,1024,Image.Resampling.BILINEAR)
+        img=img.resize((768,1024),Image.Resampling.BILINEAR)
         keypoints = self.openpose_model(img.resize((384, 512),Image.Resampling.BILINEAR))
         model_parse, _ = self.parsing_model(img.resize((384, 512),Image.Resampling.BILINEAR))
         category_dict_utils = ['upper_body', 'lower_body', 'dresses']
