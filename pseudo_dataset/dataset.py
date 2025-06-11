@@ -176,8 +176,7 @@ class VITONHDDataset(Dataset):
         self.image_densepose=densepose
 
     def __getitem__(self, idx):
-        img_fn = self.im_names[idx]
-        cloth_fn = self.c_names[self.pair_key][idx]
+
 
         agn = self.agn
         agn_mask = self.agn_mask
@@ -208,6 +207,6 @@ class VITONHDDataset(Dataset):
             image_densepose=image_densepose,
             gt_cloth_warped_mask=gt_cloth_warped_mask,
             txt="",
-            img_fn=img_fn,
-            cloth_fn=cloth_fn,
+            img_fn=None,
+            cloth_fn=None,
         )
