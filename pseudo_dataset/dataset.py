@@ -137,20 +137,8 @@ class VITONHDDataset(Dataset):
 
 
 
-        im_names = []
-        c_names = []
-        with open(opj(self.drd, f"{self.data_type}_pairs.txt"), "r") as f:
-            for line in f.readlines():
-                im_name, c_name = line.strip().split()
-                im_names.append(im_name)
-                c_names.append(c_name)
-        if is_sorted:
-            im_names, c_names = zip(*sorted(zip(im_names, c_names)))
-        self.im_names = im_names
 
-        self.c_names = dict()
-        self.c_names["paired"] = im_names
-        self.c_names["unpaired"] = c_names
+
         self.cloth_name=None
         self.person_image=None
         self.openpose_model = OpenPose(0)
