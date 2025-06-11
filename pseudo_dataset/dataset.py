@@ -152,8 +152,8 @@ class VITONHDDataset(Dataset):
         self.cloth_name = cloth_name
     def set_person_image(self,img,isRGB=False):
         assert img.shape[2]==3
-        self.person_image = img
-        densepose = self.densepose_extractor.get_dp_map(img, isRGB=False)
+        self.person_image = cv2.resize(img,(768,1024))
+        densepose = self.densepose_extractor.get_dp_map(self.person_image, isRGB=False)
         if not isRGB:
             img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         img=Image.fromarray(img)
