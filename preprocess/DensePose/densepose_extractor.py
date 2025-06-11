@@ -5,7 +5,7 @@ import os
 import sys
 from typing import Any, ClassVar, Dict, List
 import torch
-sys.path.append("./model/DensePose")
+sys.path.append("./preprocess/DensePose")
 
 from detectron2.config import CfgNode, get_cfg
 from detectron2.data.detection_utils import read_image
