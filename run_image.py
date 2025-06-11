@@ -8,6 +8,7 @@ import cv2
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
+from pseudo_dataset.dataset import VITONHDDataset
 
 from cldm.plms_hacked import PLMSSampler
 from cldm.model import create_model
@@ -50,7 +51,7 @@ def main(args):
     model.eval()
 
     sampler = PLMSSampler(model)
-    dataset = getattr(import_module("dataset"), config.dataset_name)(
+    dataset = VITONHDDataset(
         data_root_dir=args.data_root_dir,
         img_H=img_H,
         img_W=img_W,
@@ -58,7 +59,10 @@ def main(args):
         is_test=True,
         is_sorted=True
     )
-    dataloader = DataLoader(dataset, num_workers=4, shuffle=False, batch_size=batch_size, pin_memory=True)
+    dataset.set_cloth_name('jin_00')
+    person_img=cv2.imread('.assets/person.png')
+    dataset.set_person_image(person_img,False)
+    dataloader = DataLoader(dataset, num_workers=4, shuffle=False, batch_size=1, pin_memory=True)
 
     shape = (4, img_H//8, img_W//8) 
     save_dir = opj(args.save_dir, "unpair" if args.unpair else "pair")
@@ -102,8 +106,8 @@ def main(args):
                 x_sample_img = repaint_agn_img * repaint_agn_mask_img + x_sample_img * (1-repaint_agn_mask_img)
                 x_sample_img = np.uint8(x_sample_img)
 
-            to_path = opj(save_dir, f"{fn.split('.')[0]}_{cloth_fn.split('.')[0]}.jpg")
-            cv2.imwrite(to_path, x_sample_img[:,:,::-1])
+
+            cv2.imwrite('./result.jpg', x_sample_img[:,:,::-1])
 
 if __name__ == "__main__":
     args = build_args()

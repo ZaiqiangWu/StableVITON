@@ -7,6 +7,8 @@ import albumentations as A
 from torch.utils.data import Dataset
 from preprocess.openpose.run_openpose import OpenPose
 from preprocess.humanparsing.run_parsing import Parsing
+from preprocess.DensePose.densepose_extractor import DensePoseExtractor
+
 from viton_utils import get_mask_location
 from PIL import Image
 
@@ -153,6 +155,7 @@ class VITONHDDataset(Dataset):
         self.person_image=None
         self.openpose_model = OpenPose(0)
         self.parsing_model = Parsing(0)
+        self.densepose_extractor = DensePoseExtractor()
 
     def __len__(self):
         return 1
@@ -162,6 +165,7 @@ class VITONHDDataset(Dataset):
     def set_person_image(self,img,isRGB=False):
         assert img.shape[2]==3
         self.person_image = img
+        densepose = self.densepose_extractor.get_dp_map(img, isRGB=False)
         if not isRGB:
             img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
         img=Image.fromarray(img)
@@ -176,23 +180,19 @@ class VITONHDDataset(Dataset):
         mask_gray = mask_gray.resize((768, 1024), Image.NEAREST)
 
         masked_vton_img = Image.composite(mask_gray, img, mask)
+        masked_vton_img = np.array(masked_vton_img)
+        masked_vton_img=cv2.cvtColor(masked_vton_img, cv2.COLOR_BGR2RGB)
+        self.agn=masked_vton_img
+        self.agn_mask=mask
+        self.image=img
+        self.image_densepose=densepose
 
     def __getitem__(self, idx):
         img_fn = self.im_names[idx]
         cloth_fn = self.c_names[self.pair_key][idx]
 
-        agn = imread(
-                opj(self.drd, self.data_type, "agnostic-v3.2", self.im_names[idx]),
-                self.img_H,
-                self.img_W
-            )
-        agn_mask = imread(
-                opj(self.drd, self.data_type, "agnostic-mask", self.im_names[idx].replace(".jpg", "_mask.png")),
-                self.img_H,
-                self.img_W,
-                is_mask=True,
-                in_inverse_mask=True
-            )
+        agn = self.agn
+        agn_mask = self.agn_mask
         cloth = imread(
                 opj('./data', "cloth", self.cloth_name+'.jpg'),
                 self.img_H,
@@ -208,9 +208,8 @@ class VITONHDDataset(Dataset):
 
         gt_cloth_warped_mask = np.zeros_like(agn_mask)
 
-        image = imread(opj(self.drd, self.data_type, "image", self.im_names[idx]), self.img_H, self.img_W)
-        image_densepose = imread(opj(self.drd, self.data_type, "image-densepose", self.im_names[idx]), self.img_H,
-                                     self.img_W)
+        image = self.image
+        image_densepose = self.image_densepose
 
         return dict(
             agn=agn,#maksed image
