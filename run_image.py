@@ -60,7 +60,8 @@ def main(args):
         is_sorted=True
     )
     dataset.set_cloth_name('jin_00')
-    person_img=cv2.imread('.assets/person.png')
+    person_img=cv2.imread('./assets/person.png')
+
     dataset.set_person_image(person_img,False)
     dataloader = DataLoader(dataset, num_workers=4, shuffle=False, batch_size=1, pin_memory=True)
 
