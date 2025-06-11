@@ -10,7 +10,7 @@ import torch.nn.functional as F
 import numpy as np
 from skimage.metrics import structural_similarity as ssim
 
-from utils import tensor2img, resize_mask
+from sv_utils import tensor2img, resize_mask
 from einops import rearrange, repeat
 from torchvision.utils import make_grid
 from ldm.models.diffusion.ddpm import LatentDiffusion
