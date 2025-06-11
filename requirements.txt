@@ -19,3 +19,4 @@ imageio~=2.31.3
 imageio-ffmpeg
 basicsr
 av
+huggingface-hub==0.23.4
