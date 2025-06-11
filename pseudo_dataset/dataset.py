@@ -207,6 +207,6 @@ class VITONHDDataset(Dataset):
             image_densepose=image_densepose,
             gt_cloth_warped_mask=gt_cloth_warped_mask,
             txt="",
-            img_fn=None,
-            cloth_fn=None,
+            img_fn=1,
+            cloth_fn=1,
         )
