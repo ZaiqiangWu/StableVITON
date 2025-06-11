@@ -18,3 +18,4 @@ onnxruntime==1.16.2
 imageio~=2.31.3
 imageio-ffmpeg
 basicsr
+av
