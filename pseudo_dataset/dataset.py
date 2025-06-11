@@ -5,7 +5,10 @@ import cv2
 import numpy as np
 import albumentations as A
 from torch.utils.data import Dataset
-
+from preprocess.openpose.run_openpose import OpenPose
+from preprocess.humanparsing.run_parsing import Parsing
+from viton_utils import get_mask_location
+from PIL import Image
 
 def imread(
         p, h, w,
@@ -147,12 +150,32 @@ class VITONHDDataset(Dataset):
         self.c_names["paired"] = im_names
         self.c_names["unpaired"] = c_names
         self.cloth_name=None
+        self.person_image=None
+        self.openpose_model = OpenPose(0)
+        self.parsing_model = Parsing(0)
 
     def __len__(self):
         return 1
 
     def set_cloth_name(self, cloth_name):
         self.cloth_name = cloth_name
+    def set_person_image(self,img,isRGB=False):
+        assert img.shape[2]==3
+        self.person_image = img
+        if not isRGB:
+            img=cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+        img=Image.fromarray(img)
+        img=img.resize(768,1024)
+        keypoints = self.openpose_model(img.resize((384, 512)))
+        model_parse, _ = self.parsing_model(img.resize((384, 512)))
+        category_dict_utils = ['upper_body', 'lower_body', 'dresses']
+        model_type = 'dc'
+
+        mask, mask_gray = get_mask_location(model_type, category_dict_utils[0], model_parse, keypoints)
+        mask = mask.resize((768, 1024), Image.NEAREST)
+        mask_gray = mask_gray.resize((768, 1024), Image.NEAREST)
+
+        masked_vton_img = Image.composite(mask_gray, img, mask)
 
     def __getitem__(self, idx):
         img_fn = self.im_names[idx]
@@ -190,7 +213,7 @@ class VITONHDDataset(Dataset):
                                      self.img_W)
 
         return dict(
-            agn=agn,
+            agn=agn,#maksed image
             agn_mask=agn_mask,
             cloth=cloth,
             cloth_mask=cloth_mask,
