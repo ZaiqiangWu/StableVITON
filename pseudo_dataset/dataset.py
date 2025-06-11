@@ -190,7 +190,7 @@ class VITONHDDataset(Dataset):
                 self.img_H,
                 self.img_W,
                 is_mask=True,
-                cloth_mask_check=True
+                #cloth_mask_check=True
             )
 
         gt_cloth_warped_mask = np.zeros_like(agn_mask)
