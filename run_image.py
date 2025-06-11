@@ -59,7 +59,7 @@ def main(args):
         is_test=True,
         is_sorted=True
     )
-    dataset.set_cloth_name('jin_00')
+    dataset.set_cloth_name('han')
     person_img=cv2.imread('./assets/person.png')
 
     dataset.set_person_image(person_img,False)
