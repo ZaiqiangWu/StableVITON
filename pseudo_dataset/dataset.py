@@ -171,6 +171,9 @@ class VITONHDDataset(Dataset):
         masked_vton_img = np.array(masked_vton_img)
         masked_vton_img=cv2.cvtColor(masked_vton_img, cv2.COLOR_BGR2RGB)
         self.agn=masked_vton_img
+        mask=np.array(mask)
+        mask=mask[:,:,np.newaxis]
+        mask=mask[:,:,[0,0,0]]
         self.agn_mask=np.array(mask)
         self.image=self.person_image
         self.image_densepose=densepose
